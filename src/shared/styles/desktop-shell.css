@@ -1,0 +1,786 @@
+/**
+ * desktop-shell.css - Widescreen Bento Grid, Global Master Topbar & Dual-View styling
+ * for Fotografiske Signaler – Desktop Studio.
+ */
+
+:root {
+  --desktop-topbar-height: 60px;
+}
+
+/* Overordnet Fuldskærms Desktop App Shell */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.desktop-app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==================== GLOBAL MASTER TOPBAR ==================== */
+.desktop-topbar {
+  height: var(--desktop-topbar-height);
+  min-height: var(--desktop-topbar-height);
+  background: rgba(10, 12, 16, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border-highlight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  gap: 14px;
+  z-index: 200;
+}
+
+body.theme-night-red .desktop-topbar {
+  background: rgba(12, 1, 1, 0.96);
+  border-bottom-color: var(--border-subtle);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.topbar-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.topbar-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-highlight);
+  color: var(--fs-silver);
+}
+
+.studio-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-sun);
+  box-shadow: 0 0 8px var(--accent-sun);
+}
+
+/* Global Lokation i Topbar */
+.topbar-location-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.topbar-loc-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  min-width: 195px;
+  max-width: 260px;
+}
+
+.topbar-loc-trigger:hover {
+  border-color: var(--accent-sun);
+  background: var(--bg-surface-elevated);
+}
+
+.loc-trigger-text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+
+.loc-trigger-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loc-trigger-coords {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.loc-trigger-chevron {
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+.topbar-gps-btn {
+  width: 34px;
+  height: 34px;
+}
+
+/* Lokations Popover */
+.topbar-loc-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 410px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 14px;
+  z-index: 400;
+}
+
+.topbar-loc-popover.hidden {
+  display: none !important;
+}
+
+.loc-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.loc-popover-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.loc-popover-search input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-highlight);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+.loc-popover-results {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.loc-search-hit {
+  display: flex;
+  flex-direction: column;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+
+.loc-search-hit:hover {
+  border-color: var(--accent-sun);
+}
+
+.loc-search-hit strong {
+  font-size: 12px;
+  color: var(--text-main);
+}
+
+.loc-search-hit span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.loc-popover-save-row {
+  margin: 10px 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.loc-spots-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.loc-spots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.loc-spot-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.loc-spot-main {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  flex: 1;
+}
+
+.loc-spot-main strong {
+  font-size: 12px;
+}
+
+.loc-spot-main span {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.loc-spot-del {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.65;
+}
+
+.loc-spot-del:hover {
+  opacity: 1;
+}
+
+/* Global Master Dato & Klokkeslæt i Topbar */
+.topbar-master-time {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  flex: 1;
+  max-width: 620px;
+}
+
+.master-date-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.master-step-btn {
+  width: 24px;
+  height: 26px;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-elevated);
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.master-step-btn:hover {
+  border-color: var(--accent-sun);
+}
+
+.master-date-picker-wrap {
+  position: relative;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+
+.master-date-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.master-date-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.master-clock-scrubber {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.master-play-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-sun);
+  background: var(--accent-sun-glow);
+  color: var(--accent-sun);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.master-play-btn.active {
+  background: var(--accent-sun);
+  color: #07080a;
+}
+
+.master-slider-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+}
+
+.master-clock-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.master-time-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.master-phase-pill {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  text-transform: uppercase;
+}
+
+.master-sun-mini {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.master-time-range {
+  height: 4px !important;
+}
+
+.master-time-range::-webkit-slider-thumb {
+  width: 14px !important;
+  height: 14px !important;
+  background: var(--accent-sun) !important;
+}
+
+.master-now-btn {
+  padding: 4px 9px;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-elevated);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.master-now-btn:hover {
+  color: var(--text-main);
+  border-color: var(--accent-sun);
+}
+
+/* Workspace Mode Switcher */
+.topbar-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.workspace-switcher {
+  display: flex;
+  background: var(--bg-surface);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  gap: 3px;
+}
+
+.ws-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ws-mode-btn:hover {
+  color: var(--text-main);
+}
+
+.ws-mode-btn.active {
+  background: var(--bg-surface-elevated);
+  color: var(--text-main);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border-highlight);
+}
+
+/* ==================== MULTI-PANEL WORKSPACE GRID ==================== */
+.desktop-workspace-grid {
+  flex: 1;
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
+  height: calc(100vh - var(--desktop-topbar-height));
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+/* Mode 1: Komplet Dashboard (2x2 Bento Grid med alle 4 moduler synlige samtidigt) */
+.desktop-workspace-grid.mode-dashboard {
+  grid-template-columns: 1.15fr 1fr;
+  grid-template-rows: 1.08fr 0.92fr;
+}
+
+/* Mode 2: Planlægning (Stort Sol & Kort til venstre + Vejr til højre i fuld højde) */
+.desktop-workspace-grid.mode-planning {
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: 1fr;
+}
+.desktop-workspace-grid.mode-planning .panel-dof,
+.desktop-workspace-grid.mode-planning .panel-exposure {
+  display: none !important;
+}
+
+/* Mode 3: Kamera & Optik (DOF + Eksponering + Sol/3D-søger i 3 kolonner) */
+.desktop-workspace-grid.mode-optics {
+  grid-template-columns: 1.05fr 1.05fr 0.9fr;
+  grid-template-rows: 1fr;
+}
+.desktop-workspace-grid.mode-optics .panel-weather {
+  display: none !important;
+}
+
+/* Maksimeret enkelt-panel tilstand */
+.desktop-workspace-grid.has-maximized {
+  grid-template-columns: 1fr !important;
+  grid-template-rows: 1fr !important;
+}
+.desktop-workspace-grid.has-maximized .workspace-panel:not(.is-maximized) {
+  display: none !important;
+}
+.desktop-workspace-grid.has-maximized .workspace-panel.is-maximized {
+  display: flex !important;
+}
+
+/* Individuelt Panel Window Chrome */
+.workspace-panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.workspace-panel:focus-within {
+  border-color: var(--border-highlight);
+}
+
+.panel-chrome-bar {
+  height: 34px;
+  min-height: 34px;
+  background: rgba(22, 27, 34, 0.85);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  user-select: none;
+}
+
+body.theme-night-red .panel-chrome-bar {
+  background: rgba(30, 4, 4, 0.9);
+}
+
+.panel-chrome-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+}
+
+.panel-chrome-sub {
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0;
+  font-size: 11px;
+}
+
+.panel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.dot-sun { background: var(--accent-sun); box-shadow: 0 0 6px var(--accent-sun); }
+.dot-weather { background: var(--accent-weather); box-shadow: 0 0 6px var(--accent-weather); }
+.dot-dof { background: var(--accent-dof); box-shadow: 0 0 6px var(--accent-dof); }
+.dot-exposure { background: var(--accent-exposure); box-shadow: 0 0 6px var(--accent-exposure); }
+
+.panel-max-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.panel-max-btn:hover,
+.panel-max-btn.active {
+  color: var(--text-main);
+  border-color: var(--accent-sun);
+}
+
+.panel-body-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px;
+  min-height: 0;
+}
+
+/* Tilpas scrollbar til mørkt studie-design */
+.panel-body-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.panel-body-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.panel-body-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+}
+.panel-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ==================== SOL & KORT DUAL-VIEW STYLING ==================== */
+.desktop-sun-telemetry {
+  padding: 10px 14px !important;
+  margin-bottom: 10px !important;
+}
+
+.desktop-sun-telemetry .sun-time-large {
+  font-size: 24px !important;
+}
+
+.desktop-dual-scene-card {
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.desktop-dual-viewport {
+  display: grid;
+  gap: 10px;
+  height: 290px;
+  min-height: 240px;
+  width: 100%;
+}
+
+/* I Planlægning eller Maksimeret tilstand gøres Kort + 3D ekstra højt */
+.mode-planning .desktop-dual-viewport,
+.workspace-panel.is-maximized .desktop-dual-viewport {
+  height: 460px;
+}
+
+.desktop-dual-viewport.layout-split {
+  grid-template-columns: 1.15fr 1fr;
+}
+
+.desktop-dual-viewport.layout-map {
+  grid-template-columns: 1fr;
+}
+.desktop-dual-viewport.layout-map .pane-canvas {
+  display: none !important;
+}
+
+.desktop-dual-viewport.layout-3d,
+.desktop-dual-viewport.layout-compass {
+  grid-template-columns: 1fr;
+}
+.desktop-dual-viewport.layout-3d .pane-map,
+.desktop-dual-viewport.layout-compass .pane-map {
+  display: none !important;
+}
+
+.dual-pane {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #060911;
+}
+
+.dual-pane canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.pane-corner-tag {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  z-index: 450;
+  pointer-events: none;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(7, 8, 10, 0.82);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+/* ==================== VEJR DESKTOP CARDS & TABEL ==================== */
+.desktop-weather-cards {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 10px !important;
+}
+
+.hourly-col.hourly-master-selected {
+  border-color: var(--accent-sun) !important;
+  background: rgba(245, 158, 11, 0.14) !important;
+  box-shadow: inset 0 0 0 1px var(--accent-sun);
+}
+
+/* ==================== EKSPONERING AUTO-EV BAR ==================== */
+.desktop-auto-ev-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-highlight);
+  margin-bottom: 10px;
+}
+
+.auto-ev-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.auto-ev-title {
+  font-size: 12px;
+  color: var(--text-main);
+}
+
+.auto-ev-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.auto-ev-toggle-btn {
+  padding: 5px 12px !important;
+  font-size: 11px !important;
+  min-height: 30px !important;
+  white-space: nowrap;
+}
+
+.auto-ev-toggle-btn.active {
+  background: var(--accent-sun) !important;
+  color: #07080a !important;
+  border-color: transparent !important;
+  font-weight: 800 !important;
+}
+
+/* Responsivt fallback hvis vinduet gøres smalt på en laptop */
+@media (max-width: 1180px) {
+  html, body, #app, .desktop-app-shell {
+    overflow-y: auto;
+    height: auto;
+  }
+  .desktop-topbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px 12px;
+  }
+  .desktop-workspace-grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+    height: auto;
+    overflow: visible;
+  }
+  .panel-body-scroll {
+    max-height: none;
+    overflow: visible;
+  }
+}

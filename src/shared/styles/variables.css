@@ -1,0 +1,147 @@
+/**
+ * variables.css - Fotografiske Signaler fælles designsystem
+ * Konfigureret til mobil-first EVF-stil og fuld Astro Rød nattilstand.
+ */
+
+:root {
+  /* Farver - Standard mørkt EVF-tema */
+  --bg-primary: #07080a;
+  --bg-surface: #0f1217;
+  --bg-surface-elevated: #161b22;
+  --bg-card: rgba(16, 20, 27, 0.88);
+  --bg-input: #12171f;
+  --bg-hover: #1c232d;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(255, 255, 255, 0.16);
+  --border-active: rgba(255, 255, 255, 0.32);
+
+  --text-main: #f8fafc;
+  --text-muted: #a6b2be;
+  --text-dim: #64748b;
+
+  /* Brand accenter */
+  --fs-silver: #c8cbce;
+  --fs-silver-dark: #8e9499;
+
+  /* Modul-specifikke accentfarver (§5.2) */
+  --accent-weather: #38bdf8;         /* Vejr: Kølig blå/cyan */
+  --accent-weather-glow: rgba(56, 189, 248, 0.22);
+  --accent-weather-gradient: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+
+  --accent-sun: #f59e0b;             /* Sol: Varm gylden/orange */
+  --accent-sun-glow: rgba(245, 158, 11, 0.22);
+  --accent-sun-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+
+  --accent-dof: #10b981;             /* DOF: Dæmpet grøn */
+  --accent-dof-glow: rgba(16, 185, 129, 0.22);
+  --accent-dof-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
+
+  --accent-exposure: #a855f7;        /* Eksponering: Dyb violet/lilla */
+  --accent-exposure-glow: rgba(168, 85, 247, 0.22);
+  --accent-exposure-gradient: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%);
+
+  /* Astro/Fotografiske fasedetaljer */
+  --golden-primary: #f59e0b;
+  --golden-glow: rgba(245, 158, 11, 0.25);
+  --blue-primary: #38bdf8;
+  --blue-glow: rgba(56, 189, 248, 0.25);
+  --fog-primary: #94a3b8;
+  --fog-glow: rgba(148, 163, 184, 0.25);
+  --fog-badge: #475569;
+  --astro-primary: #a855f7;
+  --astro-star: #e2e8f0;
+  --astro-glow: rgba(168, 85, 247, 0.25);
+
+  --accent-success: #10b981;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+
+  /* Geometri & Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Typografi */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Header & Nav Dimensioner */
+  --header-height: 54px;
+  --bottom-nav-height: 64px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-top: env(safe-area-inset-top, 0px);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.65);
+}
+
+/* ASTRO RØD NATTILSTAND (§5.5) */
+body.theme-night-red {
+  --bg-primary: #080000;
+  --bg-surface: #140202;
+  --bg-surface-elevated: #240505;
+  --bg-card: rgba(30, 4, 4, 0.92);
+  --bg-input: #1a0303;
+  --bg-hover: #2e0808;
+
+  --border-subtle: rgba(255, 50, 50, 0.2);
+  --border-highlight: rgba(255, 50, 50, 0.4);
+  --border-active: rgba(255, 80, 80, 0.7);
+
+  --text-main: #ff4d4d;
+  --text-muted: #c93434;
+  --text-dim: #8b1e1e;
+
+  --fs-silver: #ff6666;
+  --fs-silver-dark: #cc2222;
+
+  --accent-weather: #ff4444;
+  --accent-weather-glow: rgba(255, 50, 50, 0.25);
+  --accent-weather-gradient: linear-gradient(135deg, #ff4444 0%, #aa0000 100%);
+
+  --accent-sun: #ff5533;
+  --accent-sun-glow: rgba(255, 80, 40, 0.25);
+  --accent-sun-gradient: linear-gradient(135deg, #ff5533 0%, #bb1100 100%);
+
+  --accent-dof: #ff3344;
+  --accent-dof-glow: rgba(255, 50, 60, 0.25);
+  --accent-dof-gradient: linear-gradient(135deg, #ff3344 0%, #990011 100%);
+
+  --accent-exposure: #ff3377;
+  --accent-exposure-glow: rgba(255, 51, 119, 0.25);
+  --accent-exposure-gradient: linear-gradient(135deg, #ff3377 0%, #990033 100%);
+
+  --golden-primary: #ff4444;
+  --golden-glow: rgba(255, 68, 68, 0.2);
+  --golden-gradient: linear-gradient(135deg, #ff4444 0%, #990000 100%);
+
+  --blue-primary: #ff3333;
+  --blue-glow: rgba(255, 51, 51, 0.2);
+  --blue-gradient: linear-gradient(135deg, #ff3333 0%, #880000 100%);
+
+  --fog-primary: #ff6666;
+  --fog-glow: rgba(255, 102, 102, 0.2);
+  --fog-badge: #440000;
+
+  --astro-primary: #ff2222;
+  --astro-star: #ff6666;
+  --astro-glow: rgba(255, 34, 34, 0.2);
+
+  --accent-success: #ff5555;
+  --accent-warning: #ff3333;
+  --accent-danger: #ff1111;
+}

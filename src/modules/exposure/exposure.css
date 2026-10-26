@@ -1,0 +1,509 @@
+/**
+ * exposure.css - Modul-specifikke styles for Eksponering (§10, §16)
+ * Optimeret til mobil EVF-æstetik og fuld Astro Rød nattilstand.
+ */
+
+.exposure-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* Modul header */
+.exposure-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -4px;
+}
+
+.exposure-module-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-exposure, #a855f7);
+}
+
+/* HERO KORT */
+.exposure-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Instruktions-banner for fri tilstand */
+.exposure-instruction-banner {
+  background: var(--bg-surface-elevated);
+  border: 1px dashed var(--border-highlight);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: var(--space-3);
+}
+
+/* Låst baseline referencekort */
+.exposure-baseline-card {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, rgba(22, 27, 34, 0.85) 100%);
+  border: 1px solid var(--accent-exposure, #a855f7);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.baseline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.baseline-diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 8px;
+  text-align: center;
+}
+
+.diff-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.diff-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.diff-val {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.diff-val.highlight-shutter {
+  color: #38bdf8;
+}
+
+.diff-val.highlight-iso {
+  color: #a855f7;
+}
+
+.baseline-summary-text {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 8px;
+}
+
+.exposure-hero-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 8px;
+}
+
+.hero-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-main-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hero-sub-title {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* SVG Trekant Container */
+.triangle-svg-wrap {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 400 / 320;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.triangle-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* EV Lysmåler */
+.ev-meter-wrap {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ev-meter-scale {
+  position: relative;
+  height: 24px;
+  margin: 10px 12px 6px 12px;
+  border-bottom: 2px solid var(--border-highlight);
+}
+
+.meter-tick {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 8px;
+  background: var(--border-highlight);
+  transform: translateX(-50%);
+}
+
+.meter-tick.center {
+  height: 14px;
+  background: var(--accent-success, #10b981);
+  width: 3px;
+}
+
+.meter-tick span {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+}
+
+.meter-tick.center span {
+  color: var(--accent-success, #10b981);
+  font-weight: 700;
+}
+
+.meter-needle {
+  position: absolute;
+  top: -6px;
+  bottom: -4px;
+  width: 4px;
+  background: var(--accent-exposure, #a855f7);
+  transform: translateX(-50%);
+  border-radius: 2px;
+  transition: left 0.15s ease-out, background-color 0.2s ease;
+  box-shadow: 0 0 8px currentColor;
+  z-index: 2;
+}
+
+.meter-needle.status-balanced {
+  background: var(--accent-success, #10b981);
+}
+
+.meter-needle.status-under {
+  background: var(--accent-warning, #f59e0b);
+}
+
+.meter-needle.status-over {
+  background: var(--accent-danger, #ef4444);
+}
+
+.badge-status-balanced {
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-status-under {
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-status-over {
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* Dynamisk Histogram */
+.histogram-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hist-svg {
+  width: 100%;
+  height: 60px;
+}
+
+.hist-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Hurtige vælgere og knapper */
+.quick-btn-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px 6px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.exposure-container .quick-val-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.exposure-container .quick-val-btn:active,
+.exposure-container .quick-val-btn.active {
+  background: var(--accent-exposure, #a855f7);
+  color: #ffffff;
+  border-color: var(--accent-exposure, #a855f7);
+  font-weight: 700;
+}
+
+/* ND Filter Grid */
+.nd-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.nd-filter-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 0.15s ease;
+}
+
+.nd-filter-btn.active {
+  border-color: var(--accent-exposure, #a855f7);
+  background: rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.nd-btn-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+.nd-btn-stops {
+  font-size: 11px;
+  color: var(--accent-exposure, #a855f7);
+  font-weight: 600;
+}
+
+.nd-btn-density {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* ND Resultat Hero Box */
+.nd-result-box {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(22, 27, 34, 0.95) 100%);
+  border: 1px solid var(--accent-exposure, #a855f7);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.nd-calc-value {
+  font-size: 28px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+/* BULB TIMER */
+.bulb-timer-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 16px;
+}
+
+.timer-circle-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.timer-svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.timer-circle-bg {
+  fill: none;
+  stroke: var(--bg-surface-elevated);
+  stroke-width: 10;
+}
+
+.timer-circle-progress {
+  fill: none;
+  stroke: var(--accent-exposure, #a855f7);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.25s linear;
+}
+
+.timer-display-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-time-main {
+  font-size: 36px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+}
+
+.timer-phase-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-exposure, #a855f7);
+  margin-top: 4px;
+}
+
+.timer-controls-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Scenarier Grid */
+.shutter-scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.shutter-scenario-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.shutter-scenario-card:active,
+.shutter-scenario-card:hover {
+  border-color: var(--border-highlight);
+  background: var(--bg-hover);
+}
+
+.scenario-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scenario-badge-time {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--accent-exposure, #a855f7);
+  font-weight: 700;
+}
+
+/* ASTRO RØD NATTILSTAND OVERRIDES */
+body.theme-night-red .exposure-module-badge {
+  color: var(--accent-exposure, #ff3377);
+}
+
+body.theme-night-red .nd-calc-value {
+  color: #ff4d4d;
+}
+
+body.theme-night-red .nd-filter-btn.active {
+  border-color: #ff3377;
+  background: rgba(255, 51, 119, 0.2);
+}
+
+body.theme-night-red .exposure-container .quick-val-btn.active {
+  background: #ff3377;
+  border-color: #ff3377;
+  color: #ffffff;
+}
+
+body.theme-night-red .timer-circle-progress {
+  stroke: #ff3377;
+}

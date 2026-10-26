@@ -1,0 +1,93 @@
+/**
+ * base.css - Nulstilling og grundlæggende layout for Fotografiske Signaler
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Numeriske måleværdier med tabel-cifre så målinger ikke skifter bredde (§5.3) */
+.tabular-nums,
+.metric-value,
+.stat-value,
+.time-display {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+/* App container */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  min-height: 100dvh;
+  position: relative;
+  background-color: var(--bg-primary);
+}
+
+/* Hovedindhold */
+#main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--header-height);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Modul-containere */
+.module-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  padding: var(--space-4);
+}
+
+.module-view.hidden {
+  display: none !important;
+}
+
+/* Links & fokus */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Hjælpeklasser */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

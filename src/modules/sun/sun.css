@@ -1,0 +1,586 @@
+/**
+ * sun.css - Sol visualisering og solpositionsstyling
+ */
+
+.sun-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.sun-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.sun-module-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-sun);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* LOKATIONS-BJÆLKE */
+.location-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  gap: 8px;
+}
+
+.loc-info-group {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.loc-main-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loc-sub-coords {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.loc-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* HERO TELEMETRI KORT */
+.sun-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.sun-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent-sun-gradient);
+}
+
+.sun-main-telemetry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.sun-time-large {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  line-height: 1.1;
+}
+
+.sun-date-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sun-date-sub:hover {
+  color: var(--accent-sun);
+}
+
+body.theme-night-red .sun-date-sub:hover {
+  color: #ff4d4d;
+}
+
+.sun-phase-badge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.sun-kelvin-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.sun-grid-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  text-align: center;
+}
+
+.sun-grid-metrics .stat-num {
+  color: var(--accent-sun);
+}
+
+/* CANVAS SIMULATION / KORT CONTAINER */
+.sun-scene-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.scene-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.canvas-viewport-wrap {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #070a12;
+  border: 1px solid var(--border-subtle);
+}
+
+#sunCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+#sunMapContainer {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.camera-preset-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-top: var(--space-2);
+  padding: 4px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.camera-preset-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.camera-preset-bar .quick-val-btn {
+  flex-shrink: 0;
+  background: var(--bg-surface-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.camera-preset-bar .quick-val-btn:hover {
+  background: var(--bg-surface);
+  border-color: var(--accent-sun);
+  color: #ffffff;
+}
+
+.camera-preset-bar .quick-val-btn:active {
+  transform: scale(0.96);
+}
+
+/* TIDSLINJE & SCRUBBER KONTROL */
+.timeline-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+/* DATO-VÆLGER & PLANLÆGNING */
+.sun-planner-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.sun-planner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sun-planner-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.sun-planner-title svg {
+  color: var(--accent-sun);
+}
+
+.sun-date-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sun-day-step-btn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.sun-day-step-btn:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--accent-sun);
+  color: #ffffff;
+}
+
+.sun-day-step-btn:active {
+  transform: scale(0.94);
+}
+
+.sun-date-box {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  overflow: hidden;
+}
+
+.sun-date-box:hover,
+.sun-date-box:focus-within {
+  border-color: var(--accent-sun);
+  background: var(--bg-surface-elevated);
+}
+
+.sun-date-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  color-scheme: dark;
+  font-size: 16px;
+  z-index: 2;
+}
+
+.sun-date-box-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  z-index: 1;
+  text-align: center;
+}
+
+.sun-date-box-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.sun-date-box-main svg {
+  color: var(--accent-sun);
+  flex-shrink: 0;
+}
+
+.sun-date-box-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.sun-date-presets-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sun-date-presets-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.sun-preset-pill {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.sun-preset-pill:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-highlight);
+  color: var(--text-main);
+}
+
+.sun-preset-pill.active {
+  background: var(--accent-sun-glow);
+  border-color: var(--accent-sun);
+  color: var(--accent-sun);
+  font-weight: 700;
+}
+
+.sun-timeline-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-3) 0;
+}
+
+body.theme-night-red .sun-date-box:hover,
+body.theme-night-red .sun-date-box:focus-within,
+body.theme-night-red .sun-day-step-btn:hover {
+  border-color: #ff4d4d;
+}
+
+body.theme-night-red .sun-preset-pill.active {
+  background: rgba(255, 50, 50, 0.25);
+  border-color: #ff4d4d;
+  color: #ff4d4d;
+}
+
+body.theme-night-red .sun-planner-title svg,
+body.theme-night-red .sun-date-box-main svg {
+  color: #ff4d4d;
+}
+
+.timeline-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.playback-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-play-pause {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent-sun);
+  color: #07080a;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+  transition: transform 0.1s ease;
+}
+
+.btn-play-pause:active {
+  transform: scale(0.92);
+}
+
+.btn-speed-badge {
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-xs);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+
+/* FOTOGRAFISKE HURTIG-SPRING */
+.sun-jump-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-top: var(--space-3);
+  -webkit-overflow-scrolling: touch;
+}
+
+.sun-jump-btn {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  gap: 2px;
+  text-align: left;
+}
+
+.sun-jump-btn:hover, .sun-jump-btn:active {
+  border-color: var(--accent-sun);
+  color: var(--text-main);
+}
+
+.jump-time {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-sun);
+  font-family: var(--font-mono);
+}
+
+.jump-name {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* GENSTANDSHØJDE VÆLGER */
+.subject-selector-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.subject-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  gap: 4px;
+}
+
+.subject-btn.active {
+  background: var(--bg-surface-elevated);
+  border-color: var(--accent-sun);
+  color: var(--accent-sun);
+}
+
+.subject-icon {
+  font-size: 18px;
+}
+
+.subject-name {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* LEAFLET KORTMARKØRER OG ETIKETTER */
+.fs-leaflet-icon,
+.fs-leaflet-sun-marker,
+.fs-leaflet-shadow-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.fs-map-sun-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1.5px solid #f59e0b;
+  padding: 3px 9px;
+  border-radius: 20px;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.55);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.fs-map-sun-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.fs-map-shadow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(2, 6, 23, 0.94);
+  border: 1.5px solid #38bdf8;
+  padding: 2px 7px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.fs-map-shadow-text {
+  font-size: 10px;
+  font-weight: 700;
+  color: #38bdf8;
+  font-family: var(--font-mono);
+}

@@ -1,0 +1,23 @@
+{
+  "name": "fotografiske-signaler-desktop",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cp index.template.html index.html && vite",
+    "build": "cp index.template.html index.html && tsc && vite build && rm -rf assets && cp -r dist/* .",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.16",
+    "@types/node": "^20.17.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-pwa": "^0.20.5",
+    "vitest": "^2.1.3"
+  }
+}

@@ -1,0 +1,436 @@
+/**
+ * dof.css - Styling for DOF optisk beregner modul
+ */
+
+.dof-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* Modul header med accent */
+.dof-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.dof-module-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-dof);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* MÅLERESULTATER HERO KORT */
+.dof-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.dof-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-dof-gradient);
+}
+
+.dof-main-metric {
+  text-align: center;
+  padding: var(--space-2) 0 var(--space-3);
+}
+
+.dof-total-val {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  font-family: var(--font-mono);
+}
+
+.dof-total-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.dof-grid-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  text-align: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.stat-num {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+.stat-num.highlight-dof {
+  color: var(--accent-dof);
+}
+
+.stat-num.highlight-hyper {
+  color: var(--accent-weather);
+}
+
+/* DOF BAR FORDELING */
+.dof-distribution-wrap {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dof-dist-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.dist-front {
+  background: #34d399;
+  transition: width 0.2s ease;
+}
+
+.dist-rear {
+  background: #059669;
+  transition: width 0.2s ease;
+}
+
+.dist-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* VISUALISERING TAB CONTAINER */
+.dof-vis-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.vis-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.vis-toggles {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vis-toggle-btn {
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.vis-toggle-btn.active {
+  background: var(--accent-dof);
+  color: #07080a;
+  border-color: transparent;
+}
+
+/* SVG OPTISK DIAGRAM */
+.dof-svg-wrap {
+  width: 100%;
+  height: 165px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #070a0f;
+  border: 1px solid var(--border-subtle);
+}
+
+.dof-svg-diagram {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* SIMULERET KAMERA SØGER (EVF) */
+.evf-viewfinder {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: #06090e;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.evf-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+
+.evf-bg-scenery { z-index: 1; }
+
+.evf-sky {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 65%;
+  background: linear-gradient(180deg, #0b1526 0%, #1e293b 70%, #d97706 100%);
+}
+
+.evf-mountains {
+  position: absolute;
+  bottom: 35%; left: 0; right: 0;
+  height: 60px;
+  background: radial-gradient(ellipse at 30% 100%, #172554 0%, transparent 70%),
+              radial-gradient(ellipse at 75% 100%, #1e1b4b 0%, transparent 65%);
+}
+
+.evf-distant-trees {
+  position: absolute;
+  bottom: 25%; left: 0; right: 0;
+  height: 40px;
+  background: repeating-linear-gradient(90deg, #09131f 0px, #09131f 8px, #0e1e30 12px);
+  opacity: 0.75;
+}
+
+.evf-bokeh-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bokeh-ball {
+  position: absolute;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
+  opacity: 0.65;
+  filter: blur(1.5px);
+}
+
+.evf-subject-wrap {
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.evf-subject-figure {
+  position: absolute;
+  bottom: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.evf-peaking-glow {
+  position: absolute;
+  bottom: 20px;
+  width: 120px;
+  height: 180px;
+  border-radius: 50%;
+  box-shadow: 0 0 25px 8px #10b981;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+body.theme-night-red .evf-peaking-glow {
+  box-shadow: 0 0 25px 8px #ff2222;
+}
+
+.evf-af-box {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border: 1px dashed rgba(16, 185, 129, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.af-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.evf-foreground-wrap {
+  z-index: 4;
+  top: auto;
+  bottom: 0;
+  height: 80px;
+}
+
+.evf-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.grid-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.grid-v1 { left: 33.33%; top: 0; bottom: 0; width: 1px; }
+.grid-v2 { left: 66.66%; top: 0; bottom: 0; width: 1px; }
+.grid-h1 { top: 33.33%; left: 0; right: 0; height: 1px; }
+.grid-h2 { top: 66.66%; left: 0; right: 0; height: 1px; }
+
+.evf-hud-top,
+.evf-hud-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-main);
+  pointer-events: none;
+}
+
+.evf-hud-bottom {
+  top: auto;
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+  gap: 8px;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* HURTIG-VALG KNAPPER (Presets & Stops) */
+.quick-btn-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-top: var(--space-2);
+  -webkit-overflow-scrolling: touch;
+}
+
+.quick-btn-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.dof-container .quick-val-btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+}
+
+.dof-container .quick-val-btn.active {
+  background: var(--bg-surface-elevated);
+  color: var(--accent-dof);
+  border-color: var(--accent-dof);
+}
+
+body.theme-night-red .dof-container .quick-val-btn.active {
+  color: #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+/* SCENARIEKORT GRID */
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.scenario-card-btn {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+  cursor: pointer;
+  gap: 3px;
+  transition: all 0.15s ease;
+}
+
+.scenario-card-btn:hover, .scenario-card-btn:active {
+  border-color: var(--accent-dof);
+  background: var(--bg-surface-elevated);
+}
+
+.scenario-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.scenario-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+}
