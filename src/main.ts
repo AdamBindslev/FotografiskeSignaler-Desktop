@@ -5,6 +5,7 @@
 import './shared/styles/variables.css';
 import './shared/styles/base.css';
 import './shared/styles/components.css';
+import './modules/dof/dof.css';
 import './shared/styles/desktop-shell.css';
 
 import { DesktopShell } from './app/DesktopShell.ts';

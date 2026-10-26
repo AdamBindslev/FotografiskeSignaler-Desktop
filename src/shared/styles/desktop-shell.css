@@ -1,67 +1,72 @@
 /**
- * desktop-shell.css - Widescreen Bento Grid, Global Master Topbar & Dual-View styling
- * for Fotografiske Signaler – Desktop Studio.
+ * desktop-shell.css - "Studio Canvas & Inspector" Desktop Styling
+ * Fotografiske Signaler – Desktop Studio (Fase 1.5)
+ *
+ * Hovedprincipper:
+ *  - 100vw × 100vh låst viewport (overflow: hidden) med 0 interne scrollbars!
+ *  - Opdelt i 3 sammenhængende studie-zoner:
+ *      1. Topbar (50px)
+ *      2. Midterste Studie-område (1fr): Center Canvas (Kort / 3D / EVF / Split) + Højre Camera/Optics Rack (380px)
+ *      3. Nederste Timeline & Weather Dock (160px)
  */
 
-:root {
-  --desktop-topbar-height: 60px;
-}
-
-/* Overordnet Fuldskærms Desktop App Shell */
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: var(--bg-primary);
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important;
+  background-color: var(--bg-void);
+  color: var(--text-main);
+  user-select: none;
 }
 
 #app {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-.desktop-app-shell {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
+.studio-shell {
+  display: grid;
+  grid-template-rows: 50px 1fr 162px;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
+  background: var(--bg-void);
 }
 
-/* ==================== GLOBAL MASTER TOPBAR ==================== */
-.desktop-topbar {
-  height: var(--desktop-topbar-height);
-  min-height: var(--desktop-topbar-height);
-  background: rgba(10, 12, 16, 0.96);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border-highlight);
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   1. GLOBAL STUDIO TOPBAR (50px)
+   ========================================================================== */
+
+.studio-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
-  gap: 14px;
-  z-index: 200;
-}
-
-body.theme-night-red .desktop-topbar {
-  background: rgba(12, 1, 1, 0.96);
-  border-bottom-color: var(--border-subtle);
+  gap: 12px;
+  padding: 0 14px;
+  height: 50px;
+  background: rgba(11, 14, 20, 0.96);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 1200;
 }
 
 .topbar-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .topbar-logo {
-  height: 28px;
+  height: 22px;
   width: auto;
   object-fit: contain;
 }
@@ -69,15 +74,15 @@ body.theme-night-red .desktop-topbar {
 .topbar-brand-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 10px;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: var(--accent-sun);
+  font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 0.08em;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-highlight);
-  color: var(--fs-silver);
 }
 
 .studio-dot {
@@ -85,98 +90,94 @@ body.theme-night-red .desktop-topbar {
   height: 6px;
   border-radius: 50%;
   background: var(--accent-sun);
-  box-shadow: 0 0 8px var(--accent-sun);
+  box-shadow: 0 0 6px var(--accent-sun);
 }
 
-/* Global Lokation i Topbar */
+/* Lokations-vælger + Popover */
 .topbar-location-wrap {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   flex-shrink: 0;
 }
 
 .topbar-loc-trigger {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 12px;
-  border-radius: var(--radius-sm);
+  gap: 7px;
+  padding: 4px 10px;
+  height: 34px;
+  border-radius: 7px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
+  color: var(--text-main);
   cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s ease, background 0.15s ease;
-  min-width: 195px;
-  max-width: 260px;
+  transition: border-color 0.15s ease;
 }
 
 .topbar-loc-trigger:hover {
   border-color: var(--accent-sun);
-  background: var(--bg-surface-elevated);
 }
 
 .loc-trigger-text {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  flex: 1;
+  align-items: flex-start;
+  line-height: 1.1;
 }
 
 .loc-trigger-name {
   font-size: 12px;
   font-weight: 700;
-  color: var(--text-main);
+  max-width: 155px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .loc-trigger-coords {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--text-muted);
   font-family: var(--font-mono);
 }
 
 .loc-trigger-chevron {
-  color: var(--text-dim);
-  font-size: 11px;
+  font-size: 10px;
+  color: var(--text-muted);
 }
 
 .topbar-gps-btn {
   width: 34px;
   height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 7px;
 }
 
-/* Lokations Popover */
 .topbar-loc-popover {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 6px);
   left: 0;
-  width: 410px;
-  background: var(--bg-surface-elevated);
+  width: 380px;
+  background: #0f131c;
   border: 1px solid var(--border-highlight);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  padding: 14px;
-  z-index: 400;
-}
-
-.topbar-loc-popover.hidden {
-  display: none !important;
+  border-radius: 10px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.75);
+  z-index: 2500;
+  padding: 12px;
 }
 
 .loc-popover-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 13px;
-  margin-bottom: 10px;
+  font-size: 12.5px;
+  margin-bottom: 8px;
 }
 
 .loc-popover-close {
-  background: none;
+  background: transparent;
   border: none;
   color: var(--text-muted);
   cursor: pointer;
@@ -185,74 +186,68 @@ body.theme-night-red .desktop-topbar {
 
 .loc-popover-search input {
   width: 100%;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-highlight);
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
   background: var(--bg-surface);
   color: var(--text-main);
-  font-size: 13px;
+  font-size: 12px;
+  outline: none;
+}
+
+.loc-popover-search input:focus {
+  border-color: var(--accent-sun);
 }
 
 .loc-popover-results {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 6px;
-  max-height: 200px;
+  max-height: 150px;
   overflow-y: auto;
+  margin-top: 4px;
 }
 
 .loc-search-hit {
   display: flex;
   flex-direction: column;
-  padding: 7px 10px;
+  padding: 6px 8px;
   border-radius: 6px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
   cursor: pointer;
+  font-size: 12px;
 }
 
 .loc-search-hit:hover {
-  border-color: var(--accent-sun);
-}
-
-.loc-search-hit strong {
-  font-size: 12px;
-  color: var(--text-main);
+  background: var(--bg-surface-elevated);
 }
 
 .loc-search-hit span {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-muted);
 }
 
 .loc-popover-save-row {
-  margin: 10px 0;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-subtle);
+  margin: 8px 0;
 }
 
 .loc-spots-heading {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .loc-spots-list {
+  max-height: 150px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  max-height: 180px;
-  overflow-y: auto;
+  gap: 4px;
 }
 
 .loc-spot-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: 6px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -266,7 +261,7 @@ body.theme-night-red .desktop-topbar {
 }
 
 .loc-spot-main strong {
-  font-size: 12px;
+  font-size: 11.5px;
 }
 
 .loc-spot-main span {
@@ -276,511 +271,1148 @@ body.theme-night-red .desktop-topbar {
 }
 
 .loc-spot-del {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
   opacity: 0.65;
 }
 
-.loc-spot-del:hover {
-  opacity: 1;
-}
-
-/* Global Master Dato & Klokkeslæt i Topbar */
-.topbar-master-time {
+/* Dato & Klokkeslæt Transport */
+.topbar-time-transport {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  padding: 3px 8px;
+  height: 34px;
+  border-radius: 7px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 4px 10px;
-  flex: 1;
-  max-width: 620px;
-}
-
-.master-date-group {
-  display: flex;
-  align-items: center;
-  gap: 4px;
   flex-shrink: 0;
 }
 
-.master-step-btn {
-  width: 24px;
-  height: 26px;
+.transport-step-btn {
+  width: 22px;
+  height: 24px;
   border-radius: 5px;
   border: 1px solid var(--border-subtle);
-  background: var(--bg-surface-elevated);
+  background: var(--bg-card);
   color: var(--text-main);
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1;
 }
 
-.master-step-btn:hover {
+.transport-step-btn:hover {
   border-color: var(--accent-sun);
+  color: var(--accent-sun);
 }
 
-.master-date-picker-wrap {
+.transport-date-wrap {
   position: relative;
-  padding: 3px 8px;
-  border-radius: 5px;
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-subtle);
+  padding: 0 6px;
   cursor: pointer;
 }
 
-.master-date-input {
+.transport-date-input {
   position: absolute;
   inset: 0;
   opacity: 0;
   cursor: pointer;
-  width: 100%;
 }
 
-.master-date-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-main);
+.transport-date-label {
+  font-size: 11.5px;
+  font-weight: 700;
   white-space: nowrap;
 }
 
-.master-clock-scrubber {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
+.transport-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border-subtle);
+  margin: 0 2px;
 }
 
-.master-play-btn {
-  width: 28px;
-  height: 28px;
+.transport-play-btn {
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  border: 1px solid var(--accent-sun);
-  background: var(--accent-sun-glow);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  background: rgba(245, 158, 11, 0.14);
   color: var(--accent-sun);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
-.master-play-btn.active {
+.transport-play-btn.active {
   background: var(--accent-sun);
   color: #07080a;
 }
 
-.master-slider-col {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 2px;
-}
-
-.master-clock-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.master-time-val {
+.transport-clock {
   font-size: 14px;
   font-weight: 800;
+  font-family: var(--font-mono);
   color: var(--text-main);
+  min-width: 44px;
 }
 
-.master-phase-pill {
-  font-size: 9px;
+.transport-phase-badge {
+  font-size: 10px;
   font-weight: 700;
-  padding: 1px 6px;
+  padding: 2px 7px;
   border-radius: 999px;
   border: 1px solid var(--border-subtle);
-  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
 }
 
-.master-sun-mini {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-left: auto;
-}
-
-.master-time-range {
-  height: 4px !important;
-}
-
-.master-time-range::-webkit-slider-thumb {
-  width: 14px !important;
-  height: 14px !important;
-  background: var(--accent-sun) !important;
-}
-
-.master-now-btn {
-  padding: 4px 9px;
+.transport-now-btn {
+  padding: 3px 8px;
   border-radius: 5px;
   border: 1px solid var(--border-subtle);
-  background: var(--bg-surface-elevated);
-  color: var(--text-muted);
+  background: var(--bg-card);
+  color: var(--accent-sun);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.master-now-btn:hover {
-  color: var(--text-main);
+.transport-now-btn:hover {
   border-color: var(--accent-sun);
 }
 
-/* Workspace Mode Switcher */
-.topbar-right-actions {
+/* Live Telemetri Bar i Topbar */
+.topbar-telemetry-strip {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.tele-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(18, 22, 31, 0.85);
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.tp-lbl {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.tp-val {
+  font-size: 11.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+
+.tp-sub {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-sun);
+  font-family: var(--font-mono);
+}
+
+.topbar-right-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-shrink: 0;
 }
 
-.workspace-switcher {
-  display: flex;
-  background: var(--bg-surface);
-  padding: 3px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
-  gap: 3px;
+.topbar-night-btn {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 7px;
 }
 
-.ws-mode-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 11px;
-  border-radius: 6px;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
+.topbar-night-btn.active {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ff4d4d;
 }
 
-.ws-mode-btn:hover {
-  color: var(--text-main);
-}
+/* ==========================================================================
+   2. MIDTERSTE STUDIO ARBEJDSOMRÅDE (CENTER STAGE + HØJRE RACK)
+   ========================================================================== */
 
-.ws-mode-btn.active {
-  background: var(--bg-surface-elevated);
-  color: var(--text-main);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
-  border: 1px solid var(--border-highlight);
-}
-
-/* ==================== MULTI-PANEL WORKSPACE GRID ==================== */
-.desktop-workspace-grid {
-  flex: 1;
+.studio-main-area {
   display: grid;
-  gap: 10px;
-  padding: 10px;
+  grid-template-columns: 1fr 376px;
   width: 100%;
-  height: calc(100vh - var(--desktop-topbar-height));
-  overflow: hidden;
-  background: var(--bg-primary);
-}
-
-/* Mode 1: Komplet Dashboard (2x2 Bento Grid med alle 4 moduler synlige samtidigt) */
-.desktop-workspace-grid.mode-dashboard {
-  grid-template-columns: 1.15fr 1fr;
-  grid-template-rows: 1.08fr 0.92fr;
-}
-
-/* Mode 2: Planlægning (Stort Sol & Kort til venstre + Vejr til højre i fuld højde) */
-.desktop-workspace-grid.mode-planning {
-  grid-template-columns: 1.25fr 1fr;
-  grid-template-rows: 1fr;
-}
-.desktop-workspace-grid.mode-planning .panel-dof,
-.desktop-workspace-grid.mode-planning .panel-exposure {
-  display: none !important;
-}
-
-/* Mode 3: Kamera & Optik (DOF + Eksponering + Sol/3D-søger i 3 kolonner) */
-.desktop-workspace-grid.mode-optics {
-  grid-template-columns: 1.05fr 1.05fr 0.9fr;
-  grid-template-rows: 1fr;
-}
-.desktop-workspace-grid.mode-optics .panel-weather {
-  display: none !important;
-}
-
-/* Maksimeret enkelt-panel tilstand */
-.desktop-workspace-grid.has-maximized {
-  grid-template-columns: 1fr !important;
-  grid-template-rows: 1fr !important;
-}
-.desktop-workspace-grid.has-maximized .workspace-panel:not(.is-maximized) {
-  display: none !important;
-}
-.desktop-workspace-grid.has-maximized .workspace-panel.is-maximized {
-  display: flex !important;
-}
-
-/* Individuelt Panel Window Chrome */
-.workspace-panel {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  height: 100%;
   overflow: hidden;
   min-height: 0;
-  min-width: 0;
-  box-shadow: var(--shadow-sm);
 }
 
-.workspace-panel:focus-within {
-  border-color: var(--border-highlight);
+.studio-stage-wrap {
+  display: grid;
+  grid-template-rows: 38px 1fr;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+  background: #06080d;
+  border-right: 1px solid var(--border-subtle);
 }
 
-.panel-chrome-bar {
-  height: 34px;
-  min-height: 34px;
-  background: rgba(22, 27, 34, 0.85);
-  border-bottom: 1px solid var(--border-subtle);
+/* Stage Toolbar (View-Switcher + Vector HUD) */
+.stage-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
-  user-select: none;
+  height: 38px;
+  background: rgba(14, 18, 26, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 10px;
 }
 
-body.theme-night-red .panel-chrome-bar {
-  background: rgba(30, 4, 4, 0.9);
+.stage-view-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-void);
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
 }
 
-.panel-chrome-title {
+.stage-view-btn {
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.stage-view-btn:hover {
+  color: var(--text-main);
+}
+
+.stage-view-btn.active {
+  background: var(--bg-surface-elevated);
+  color: var(--accent-sun);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.stage-vector-hud {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.stage-vector-hud strong {
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+.sv-sep {
+  color: var(--text-dim);
+}
+
+/* Stage Canvas Grid (Split / Map / 3D / EVF) */
+.stage-canvas-grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.stage-canvas-grid.view-split {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.stage-canvas-grid.view-map {
+  grid-template-columns: 1fr;
+}
+
+.stage-canvas-grid.view-map .pane-visualizer {
+  display: none !important;
+}
+
+.stage-canvas-grid.view-3d,
+.stage-canvas-grid.view-evf {
+  grid-template-columns: 1fr;
+}
+
+.stage-canvas-grid.view-3d .pane-map,
+.stage-canvas-grid.view-evf .pane-map {
+  display: none !important;
+}
+
+.stage-pane {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.pane-map {
+  border-right: 1px solid var(--border-subtle);
+}
+
+.map-viewport {
+  width: 100%;
+  height: 100%;
+  background: #070a10;
+}
+
+/* Map Pins & Legend Overlay */
+.studio-pin-camera .pin-cam-bubble {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 2.5px solid #f59e0b;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: grab;
+}
+
+.studio-pin-subject .pin-subj-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(6, 78, 59, 0.95);
+  border: 2px solid #10b981;
+  color: #ecfdf5;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.75);
+  white-space: nowrap;
+  cursor: grab;
+}
+
+.studio-map-pill.pill-sun {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1.5px solid #f59e0b;
+  color: #fbbf24;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.map-legend-overlay {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 800;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.ml-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(9, 13, 22, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 10px;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+}
+
+.ml-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Højre halvdel af Stage: Visualizer (3D Lys & EVF Søger) */
+.pane-visualizer {
+  display: grid;
+  grid-template-rows: 36px 1fr;
+  background: #070a10;
+}
+
+.vis-pane-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  height: 36px;
+  background: rgba(15, 20, 30, 0.9);
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 6px;
+}
+
+.vis-mode-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.vis-tab-btn {
+  padding: 3px 9px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vis-tab-btn.active {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-highlight);
   color: var(--text-main);
 }
 
-.panel-chrome-sub {
-  font-weight: 500;
+.vis-context-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vis-mini-group {
+  display: flex;
+  background: var(--bg-void);
+  padding: 1.5px;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+}
+
+.vis-mini-btn {
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.vis-mini-btn:hover {
+  color: var(--text-main);
+}
+
+.vis-mini-btn.active {
+  background: var(--bg-surface-elevated);
+  color: var(--accent-sun);
+}
+
+.vis-content-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.studio-shadow-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+
+/* EVF + Optisk Diagram Stack (Uden scrollbar!) */
+.studio-evf-stack {
+  display: grid;
+  grid-template-rows: 1fr 148px;
+  width: 100%;
+  height: 100%;
+  gap: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.studio-evf-viewfinder {
+  height: 100% !important;
+  min-height: 0;
+  border-radius: 8px;
+}
+
+.studio-dof-diagram-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #070a0f;
+}
+
+/* ==========================================================================
+   3. HØJRE INSPECTOR: STUDIO CAMERA, OPTICS, DOF & EXPOSURE RACK (0 SCROLL!)
+   ========================================================================== */
+
+.studio-rack-mount {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.studio-camera-rack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 8px 11px;
+  box-sizing: border-box;
+  overflow: hidden;
+  gap: 6px;
+}
+
+.rack-section {
+  background: rgba(17, 21, 30, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 7px 9px;
+}
+
+.rack-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.rack-section-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.rack-auto-ev-pill {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rack-auto-ev-pill.active {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: var(--accent-sun);
+  color: var(--accent-sun);
+}
+
+/* Kamera LCD Display Strip */
+.rack-lcd-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  background: #07090e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 5px 6px;
+  margin-bottom: 5px;
+}
+
+.lcd-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+}
+
+.lcd-label {
+  font-size: 8.5px;
+  font-weight: 700;
   color: var(--text-dim);
-  letter-spacing: 0;
+  letter-spacing: 0.05em;
+}
+
+.lcd-val {
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+
+.lcd-val.val-aperture {
+  color: var(--accent-sun);
+}
+
+.lcd-val.val-shutter {
+  color: var(--accent-weather);
+}
+
+.lcd-val.val-iso {
+  color: var(--accent-exposure);
+}
+
+/* Histogram + EV Status */
+.rack-hist-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rack-hist-svg {
+  width: 100%;
+  height: 30px;
+  background: #07090e;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.rack-ev-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+}
+
+.rack-sky-info {
+  color: var(--text-muted);
+}
+
+.rack-delta-pill {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.rack-delta-pill.ok {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.rack-delta-pill.warn {
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+}
+
+/* Rack Controls Body */
+.rack-controls-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  justify-content: space-evenly;
+}
+
+.rack-dual-select-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 6px;
+}
+
+.rack-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rack-field label {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.rack-select {
+  padding: 4px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 11px;
+  font-weight: 600;
+  outline: none;
+}
+
+.rack-control-block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 11px;
 }
 
-.panel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+.rc-label {
+  font-weight: 600;
+  color: var(--text-muted);
 }
-.dot-sun { background: var(--accent-sun); box-shadow: 0 0 6px var(--accent-sun); }
-.dot-weather { background: var(--accent-weather); box-shadow: 0 0 6px var(--accent-weather); }
-.dot-dof { background: var(--accent-dof); box-shadow: 0 0 6px var(--accent-dof); }
-.dot-exposure { background: var(--accent-exposure); box-shadow: 0 0 6px var(--accent-exposure); }
 
-.panel-max-btn {
-  display: inline-flex;
-  align-items: center;
+.rc-val {
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+
+.rack-control-block input[type='range'] {
+  height: 5px;
+  margin: 1px 0;
+}
+
+.rack-chips-row {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+}
+
+.rack-chip {
+  padding: 2px 0;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  text-align: center;
+}
+
+.rack-chip:hover {
+  color: var(--text-main);
+}
+
+.rack-chip.active {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: var(--accent-sun);
+  color: var(--accent-sun);
+}
+
+.rack-mini-action {
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--accent-dof);
+  font-size: 9.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rack-dual-sliders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* Sektion 3: DOF Telemetry */
+.rack-diff-pill {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.rack-diff-pill.warning {
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+}
+
+.rack-diff-pill.severe {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.rack-dof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 4px;
-  padding: 2px 8px;
+  background: #07090e;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dof-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dc-lbl {
+  font-size: 8.5px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.dc-val {
+  font-size: 11px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+
+.rack-dof-bar-wrap {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rack-dof-bar {
+  display: flex;
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.rdb-front {
+  background: #34d399;
+}
+
+.rdb-rear {
+  background: #059669;
+}
+
+.rack-dof-sub-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Sektion 4: ND-Filter & Bulb Timer */
+.rack-nd-chips {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-bottom: 5px;
+}
+
+.rack-nd-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 2px;
   border-radius: 5px;
   border: 1px solid var(--border-subtle);
   background: var(--bg-surface);
   color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
   cursor: pointer;
+  line-height: 1.15;
 }
 
-.panel-max-btn:hover,
-.panel-max-btn.active {
-  color: var(--text-main);
-  border-color: var(--accent-sun);
-}
-
-.panel-body-scroll {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 12px;
-  min-height: 0;
-}
-
-/* Tilpas scrollbar til mørkt studie-design */
-.panel-body-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-.panel-body-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-.panel-body-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 3px;
-}
-.panel-body-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-
-/* ==================== SOL & KORT DUAL-VIEW STYLING ==================== */
-.desktop-sun-telemetry {
-  padding: 10px 14px !important;
-  margin-bottom: 10px !important;
-}
-
-.desktop-sun-telemetry .sun-time-large {
-  font-size: 24px !important;
-}
-
-.desktop-dual-scene-card {
-  padding: 10px !important;
-  margin-bottom: 10px !important;
-}
-
-.desktop-dual-viewport {
-  display: grid;
-  gap: 10px;
-  height: 290px;
-  min-height: 240px;
-  width: 100%;
-}
-
-/* I Planlægning eller Maksimeret tilstand gøres Kort + 3D ekstra højt */
-.mode-planning .desktop-dual-viewport,
-.workspace-panel.is-maximized .desktop-dual-viewport {
-  height: 460px;
-}
-
-.desktop-dual-viewport.layout-split {
-  grid-template-columns: 1.15fr 1fr;
-}
-
-.desktop-dual-viewport.layout-map {
-  grid-template-columns: 1fr;
-}
-.desktop-dual-viewport.layout-map .pane-canvas {
-  display: none !important;
-}
-
-.desktop-dual-viewport.layout-3d,
-.desktop-dual-viewport.layout-compass {
-  grid-template-columns: 1fr;
-}
-.desktop-dual-viewport.layout-3d .pane-map,
-.desktop-dual-viewport.layout-compass .pane-map {
-  display: none !important;
-}
-
-.dual-pane {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  background: #060911;
-}
-
-.dual-pane canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-.pane-corner-tag {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  z-index: 450;
-  pointer-events: none;
+.rack-nd-btn strong {
   font-size: 10px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: rgba(7, 8, 10, 0.82);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-muted);
+  color: var(--text-main);
 }
 
-/* ==================== VEJR DESKTOP CARDS & TABEL ==================== */
-.desktop-weather-cards {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 10px !important;
+.rack-nd-btn span {
+  font-size: 8.5px;
+  font-family: var(--font-mono);
 }
 
-.hourly-col.hourly-master-selected {
-  border-color: var(--accent-sun) !important;
-  background: rgba(245, 158, 11, 0.14) !important;
-  box-shadow: inset 0 0 0 1px var(--accent-sun);
+.rack-nd-btn.active {
+  background: rgba(168, 85, 247, 0.18);
+  border-color: var(--accent-exposure);
+  color: #e9d5ff;
 }
 
-/* ==================== EKSPONERING AUTO-EV BAR ==================== */
-.desktop-auto-ev-bar {
+.rack-nd-result-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-highlight);
-  margin-bottom: 10px;
+  background: #07090e;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.auto-ev-info {
+.nd-res-left {
   display: flex;
   flex-direction: column;
+  line-height: 1.15;
 }
 
-.auto-ev-title {
-  font-size: 12px;
-  color: var(--text-main);
-}
-
-.auto-ev-sub {
-  font-size: 11px;
+.nd-res-label {
+  font-size: 9px;
   color: var(--text-muted);
 }
 
-.auto-ev-toggle-btn {
-  padding: 5px 12px !important;
-  font-size: 11px !important;
-  min-height: 30px !important;
+.nd-res-val {
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--accent-exposure);
+}
+
+.nd-bulb-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bulb-countdown {
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--accent-sun);
+}
+
+.rack-bulb-btn {
+  padding: 3px 9px !important;
+  min-height: 26px !important;
+  font-size: 10.5px !important;
+}
+
+/* ==========================================================================
+   4. NEDERSTE STUDIO TIMELINE & WEATHER DOCK (162px, 0 SCROLL!)
+   ========================================================================== */
+
+.studio-dock-mount {
+  width: 100%;
+  height: 162px;
+  background: #0a0d14;
+  border-top: 1px solid var(--border-subtle);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.studio-timeline-dock {
+  display: grid;
+  grid-template-rows: 46px 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.timeline-top-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  height: 46px;
+  background: rgba(15, 19, 28, 0.96);
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 8px;
+}
+
+.dock-days-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dock-day-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
   white-space: nowrap;
 }
 
-.auto-ev-toggle-btn.active {
-  background: var(--accent-sun) !important;
-  color: #07080a !important;
-  border-color: transparent !important;
-  font-weight: 800 !important;
+.dock-day-btn:hover {
+  color: var(--text-main);
 }
 
-/* Responsivt fallback hvis vinduet gøres smalt på en laptop */
-@media (max-width: 1180px) {
-  html, body, #app, .desktop-app-shell {
-    overflow-y: auto;
-    height: auto;
-  }
-  .desktop-topbar {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 8px 12px;
-  }
-  .desktop-workspace-grid {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    height: auto;
-    overflow: visible;
-  }
-  .panel-body-scroll {
-    max-height: none;
-    overflow: visible;
-  }
+.dock-day-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-weather);
+  color: var(--text-main);
+}
+
+.dd-temp {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-subtle);
+  flex-shrink: 0;
+}
+
+/* De 4 Fotovindue-Badges i Docken */
+.dock-events-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dock-photo-window-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  height: 34px;
+  border-radius: 7px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.dock-photo-window-pill:hover {
+  border-color: var(--accent-sun);
+  transform: translateY(-1px);
+}
+
+.pw-icon {
+  font-size: 14px;
+}
+
+.pw-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.pw-title {
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.pw-title small {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.pw-score {
+  font-size: 10px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
+
+.dock-photo-window-pill.score-high .pw-score {
+  color: #10b981;
+}
+
+.dock-photo-window-pill.score-mid .pw-score {
+  color: #f59e0b;
+}
+
+.dock-photo-window-pill.score-low .pw-score {
+  color: #94a3b8;
+}
+
+/* Hurtigspring i Docken */
+.dock-jumps-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dock-jump-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.dock-jump-chip:hover {
+  border-color: var(--accent-sun);
+  color: var(--text-main);
+}
+
+.dj-time {
+  font-size: 10.5px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--accent-sun);
+}
+
+.dj-label {
+  font-size: 8.5px;
+}
+
+/* Svævende Detalje-popover for Fotovinduer */
+.dock-event-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 390px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(12, 16, 24, 0.97);
+  border: 1px solid var(--accent-sun);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75);
+  z-index: 2200;
+  pointer-events: none;
+}
+
+/* 24-Timers HTML5 Canvas Scrubber */
+.timeline-canvas-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: ew-resize;
+}
+
+#studioTimelineCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
